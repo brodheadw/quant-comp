@@ -1,6 +1,7 @@
 module Main (main) where
 
 import Qubit
+import Lib
 import Data.Complex
 
 main :: IO ()

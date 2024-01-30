@@ -41,7 +41,6 @@ library
 executable quantcomp-exe
   main-is: Main.hs
   other-modules:
-      Qubit
       Paths_quantcomp
   autogen-modules:
       Paths_quantcomp
