@@ -1,1 +1,0 @@
-# quantcomp
