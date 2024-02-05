@@ -1,23 +1,24 @@
 module Main (main) where
 
 import Qubit
-import Lib
-import Data.Complex
 
 main :: IO ()
 main = do
-    -- Define the qubit states with explicit type annotation
-    let qubits :: [Qubit]  -- Explicit type annotation
-        qubits = [ Qubit (sqrt 2 :+ 0) (sqrt 2 :+ 0),      -- a)
-                   Qubit (0.5 :+ 0) ((sqrt 3 / 2) :+ 0),   -- b)
-                   Qubit ((1 / sqrt 2) :+ 0) (0 :+ (-1 / sqrt 2)), -- c)
-                   Qubit (0.25 :+ 0) (0 :+ (sqrt 15 / 4))  -- d)
+    {-let qubits :: [Qubit]
+        qubits = [ createQubitFromMagPhase (sqrt 2, 0) (sqrt 2, 0),  -- a)
+                   createQubitFromMagPhase (1/2, 0) (sqrt 3 / 2, 0), -- b)
+                   createQubitFromMagPhase (1/sqrt 2, 0) (1/sqrt 2, pi),  -- c) (note the phase of pi for the imaginary part)
+                   createQubitFromMagPhase (1/4, 0) (sqrt 15 / 4, pi/2)  -- d) (phase of pi/2 for the imaginary part)
                  ]
 
-    -- Process each qubit
-    mapM_ processQubit qubits
+    mapM_ processQubit qubits-}
 
-processQubit :: Qubit -> IO ()
+    let qubit1 = ket0
+    let qubit2 = pauliX ket1
+    deutschAlgorithm qubit1 qubit2
+
+
+{-processQubit :: Qubit -> IO ()
 processQubit q = do
     let normalizedQubit = normalize q
     let (theta, phi) = toBloch normalizedQubit
@@ -25,4 +26,14 @@ processQubit q = do
     putStrLn $ showQubit normalizedQubit
     putStrLn $ "Bloch Sphere Coordinates: θ = " ++ show theta ++ ", φ = " ++ show phi
     putStrLn $ "Probability |0⟩: " ++ show prob0 ++ ", Probability |1⟩: " ++ show prob1
-    putStrLn ""
+    putStrLn ""-}
+
+{----- HOMEWORK 2 -----}
+
+deutschAlgorithm :: Qubit -> Qubit -> IO ()
+deutschAlgorithm q1 q2 = do
+    let q1' = hadamard q1
+    let q2' = hadamard q2
+    let (q1'', q2'') = fCNOT q1' q2'
+    let q1_final = hadamard q1''
+    putStrLn $ "Final state of first qubit: " ++ showQubit q1_final
